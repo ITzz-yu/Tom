@@ -247,7 +247,7 @@ const applyShowPassword = () => {
     gsap.to(p, { x: -5, y: -4, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
   });
   yellowRef.value?.querySelectorAll('.pupil').forEach((p) => {
-    gsap.to(p, { x: -5, y: -4, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
+    gsap.to(p, { x: -2, y: -3, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
   });
 };
 
@@ -267,10 +267,10 @@ const applyPasswordGuardMode = () => {
     qt.blackFaceTop(20);
     qt.orangeFaceX(22 - 82);
     qt.orangeFaceY(72 - 90);
-    qt.yellowFaceX(12 - 52);
-    qt.yellowFaceY(22 - 40);
-    qt.mouthX(-14);
-    qt.mouthY(-8);
+    qt.yellowFaceX(20 - 52);
+    qt.yellowFaceY(35 - 40);
+    qt.mouthX(10 - 40);
+    qt.mouthY(0);
   }
 
   purpleRef.value?.querySelectorAll('.eyeball-pupil').forEach((p) => {
@@ -283,7 +283,7 @@ const applyPasswordGuardMode = () => {
     gsap.to(p, { x: -5, y: -5, duration: 0.25, ease: 'power2.out', overwrite: 'auto' });
   });
   yellowRef.value?.querySelectorAll('.pupil').forEach((p) => {
-    gsap.to(p, { x: -5, y: -5, duration: 0.25, ease: 'power2.out', overwrite: 'auto' });
+    gsap.to(p, { x: -2, y: -3, duration: 0.25, ease: 'power2.out', overwrite: 'auto' });
   });
 };
 
