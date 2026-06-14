@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="container">
     <div class="leftPanel">
       <div class="leftTop">
@@ -69,12 +69,12 @@
             </a-input>
           </a-form-item>
 
-          <div class="fieldLabel">访问密钥</div>
+          <div class="fieldLabel">访问密码</div>
           <a-form-item name="password">
             <a-input
               :value="formState.password"
               :type="showPassword ? 'text' : 'password'"
-              placeholder="请输入访问密钥"
+              placeholder="请输入访问密码"
               @update:value="updatePassword"
               @change="onPasswordChange"
               @click="onPasswordClick"
@@ -140,8 +140,8 @@ const rules: Record<string, { required?: boolean; min?: number; message: string;
     { min: 3, message: '用户名长度不能少于3个字符', trigger: 'blur' },
   ],
   password: [
-    { required: true, message: '请输入访问密钥', trigger: 'blur' },
-    { min: 6, message: '访问密钥长度不能少于6个字符', trigger: 'blur' },
+    { required: true, message: '请输入密码', trigger: 'blur' },
+    { min: 6, message: '密码长度不能少于6个字符', trigger: 'blur' },
   ],
 };
 
