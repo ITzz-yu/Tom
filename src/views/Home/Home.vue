@@ -17,10 +17,26 @@
 
       <!-- 文章列表 -->
       <section class="article-section">
-        <div class="article-grid">
-          <div v-for="post in articles" :key="post.id" class="article-card">
+        <!-- 骨架屏 loading 状态 -->
+        <div v-if="loadingArticles" class="article-grid skeleton-grid">
+          <div v-for="i in 6" :key="i" class="skeleton-card">
+            <div class="skeleton-cover"></div>
+            <div class="skeleton-body">
+              <div class="skeleton-title"></div>
+              <div class="skeleton-excerpt line-1"></div>
+              <div class="skeleton-excerpt line-2"></div>
+              <div class="skeleton-meta">
+                <div class="skeleton-meta-date"></div>
+                <div class="skeleton-meta-views"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 实际文章列表 -->
+        <div v-else class="article-grid">
+          <div v-for="post in articles" :key="post.id" class="article-card" :data-index="post.id">
             <div class="card-cover">
-              <img :src="post.cover" :alt="post.title" />
+              <img :src="post.cover" :alt="post.title" loading="lazy" />
               <div class="card-category">{{ post.category }}</div>
             </div>
             <div class="card-body">
@@ -117,7 +133,19 @@ const currentBgIndex = ref(0)
 
 onMounted(() => {
   currentBgIndex.value = Math.floor(Math.random() * bgImages.value.length)
+
+  // 模拟数据加载，延迟后显示卡片入场动画
+  setTimeout(() => {
+    loadingArticles.value = false
+    const cards = document.querySelectorAll('.article-card')
+    gsap.fromTo(cards,
+      { y: 30, opacity: 0, scale: 0.97 },
+      { y: 0, opacity: 1, scale: 1, duration: 0.5, stagger: 0.08, ease: 'power2.out' }
+    )
+  }, 600)
 })
+
+const loadingArticles = ref(true)
 
 const articles = ref([
   {
@@ -306,6 +334,65 @@ const articles = ref([
   justify-content: space-between;
   font-size: 0.8rem;
   color: #94a3b8;
+}
+
+/* 骨架屏 loading 样式 */
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+.skeleton-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+.skeleton-cover {
+  height: 180px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+.skeleton-body {
+  padding: 1.25rem;
+}
+.skeleton-title {
+  height: 16px;
+  width: 80%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+  animation: shimmer 1.5s infinite;
+}
+.skeleton-excerpt {
+  height: 12px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  animation: shimmer 1.5s infinite;
+}
+.skeleton-excerpt.line-1 { width: 100%; }
+.skeleton-excerpt.line-2 { width: 70%; }
+.skeleton-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.75rem;
+}
+.skeleton-meta-date,
+.skeleton-meta-views {
+  height: 12px;
+  width: 80px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 /* 波浪容器 - 底部 1/6 高度 */
